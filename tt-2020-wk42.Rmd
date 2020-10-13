@@ -1,0 +1,58 @@
+---
+title: "tidytuesday-2020-wk42"
+author: "Silvia P. Canelón"
+date: "10/13/2020"
+output: 
+  html_document:
+    theme: flatly
+---
+
+```{r setup}
+library(tidyverse)
+library(tidytuesdayR)
+```
+
+```{r}
+# load the data
+tt_data <- tt_load("2020-10-13")
+tt_data <- tt_load(2020, week=42)
+
+# take a peek
+readme(tt_data)
+print(tt_data)
+```
+```{r}
+datasaurus_dozen <- tt_data$datasaurus
+datasaurus_dozen
+```
+ 
+```{r}
+ggplot(datasaurus_dozen, aes(x=x, y=y, colour=dataset))+
+  geom_point()+
+  theme_void()+
+  theme(legend.position = "none")+
+  facet_wrap(~dataset, ncol=3)
+```
+```{r}
+datasaurus_dozen %>%
+  ggplot(aes(x = x, fill = dataset)) +
+  geom_histogram() +
+  facet_wrap(~dataset, scales = "free_y")
+
+datasaurus_dozen %>%
+  ggplot(aes(x = y, fill = dataset)) +
+  geom_histogram() +
+  facet_wrap(~dataset, scales = "free_y")
+
+datasaurus_dozen %>%
+  filter(dataset %in% c("away", "dino")) %>%
+  ggplot(aes(x = x, fill = dataset)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+
+datasaurus_dozen %>%
+  filter(dataset %in% c("away", "dino")) %>%
+  ggplot(aes(x = y, fill = dataset)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+```
+ 
+ 
